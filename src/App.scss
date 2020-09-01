@@ -1,0 +1,15 @@
+/**
+ * Main app styles
+ */
+
+@import "~bootstrap/scss/bootstrap";
+
+.points-counter {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#themeBox {
+	border: 1px solid grey;
+}
