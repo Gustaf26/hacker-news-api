@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
+import useHook from '../hooks/useHook'
 
 const HackerNewsArticle = (props) => {
 
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
-	const history = useHistory();
 	const { articleId } = useParams();
-	const location = useLocation();
-	console.log('article via location state:', location.state.article);
+	 const location = useLocation();
+	 const history = useHistory();
+
+	const [lochis, setLochis] = useHook({location:location, history: history})
+	console.log(lochis)
 
 	useEffect(() => {
 		// fetch article from Hacker News API
@@ -18,9 +21,17 @@ const HackerNewsArticle = (props) => {
 		}
 
 		setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
+
+		setLochis({location:lochis.location, history: lochis.history.push(`${lochis.location.pathname}`)})
+
+		return () =>{
+
+			setLochis({location: lochis.location, history:''})
+
+		}
+
 	}, [articleId, setUrl]);
 
-	if (data) {console.log(data)}
 
 	return (
 		<article className="mt-3">
@@ -52,12 +63,12 @@ const HackerNewsArticle = (props) => {
 										<dt className="col-sm-3">Points</dt>
 										<dd className="col-sm-9">{data.points}</dd>
 						
-										{location.state.article.url? 
+										{lochis.location.state? 
 								
 								/* <div className="content" dangerouslySetInnerHTML={{ __html: data.text }}> */
 										<dl>
 											<dt className="col-sm-3"> Available at</dt>
-											<dd className="col-sm-9"><a href={`${location.state.article.url}`}>{location.state.article.url}</a></dd> 
+											<dd className="col-sm-9"><a href={`${lochis.location.state.article.url}`}>{lochis.location.state.article.url}</a></dd> 
 										</dl>
 								
 										:null}
