@@ -20,6 +20,8 @@ const HackerNewsArticle = (props) => {
 		setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
 	}, [articleId, setUrl]);
 
+	if (data) {console.log(data)}
+
 	return (
 		<article className="mt-3">
 			{
@@ -49,10 +51,18 @@ const HackerNewsArticle = (props) => {
 
 										<dt className="col-sm-3">Points</dt>
 										<dd className="col-sm-9">{data.points}</dd>
+						
+										{location.state.article.url? 
+								
+								/* <div className="content" dangerouslySetInnerHTML={{ __html: data.text }}> */
+										<dl>
+											<dt className="col-sm-3"> Available at</dt>
+											<dd className="col-sm-9"><a href={`${location.state.article.url}`}>{location.state.article.url}</a></dd> 
+										</dl>
+								
+										:null}
 									</dl>
 								</div>
-
-								<div className="content" dangerouslySetInnerHTML={{ __html: data.text }}></div>
 
 								<div>
 									<Link to='/' className="btn btn-primary">&laquo; Back to front page</Link>
