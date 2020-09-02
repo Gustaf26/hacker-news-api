@@ -13,3 +13,9 @@
 #themeBox {
 	border: 1px solid grey;
 }
+
+#newsContainer{display: flex;
+	flex-direction: row;}
+
+#add{background-color: lightgray;
+	color: darkslateblue;}

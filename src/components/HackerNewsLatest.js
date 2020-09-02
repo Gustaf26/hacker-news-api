@@ -45,25 +45,25 @@ const HackerNewsLatest = () => {
 			<p>Can't find something interesting? Try <Link to='/search'>searching</Link>!</p>
 
 			<ul className="list-group">
-				<li className="list-group-item">
+				<li id="newsContainer" className="list-group-item">
 
-				<div>
-					<h3>Some Article</h3>
+					<div id="add" className="col-3">
+						<h3>Some Advertisment</h3>
 
-					<p className="text-muted small">
-						Posted at sometime by someone
-					</p>
+						<p className="text-muted small">
+							Sponsored by someone
+						</p>
 
-					<p>
-						<Link to='/articles/24336087' className="btn btn-sm btn-primary">Read more</Link>
-					</p>
-				</div>
-				<div>
-					{data.hits?
-					<ul className="search-results list-group">
-						{renderNews(data.hits)}
-					</ul>:null}
-				</div>
+						<p>
+							<button className="btn btn-sm btn-primary">Go to advertisment</button>
+						</p>
+					</div>
+					<div className="col-8">
+						{data.hits?
+						<ul className="search-results list-group">
+							{renderNews(data.hits)}
+						</ul>:null}
+					</div>
 				</li>
 			</ul>
 		</>
