@@ -8,10 +8,14 @@ const HackerNewsSearch = () => {
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 	const location = useLocation();
+	const [searchParam, setSearchParam] = useState('')
 	console.log('location:', location);
 
 	useEffect(() => {
 		queryRef.current.focus();
+
+		if (location.state) {setUrl(location.state.search);}
+		
 	}, []);
 
 	const searchHackerNews = e => {
@@ -25,6 +29,7 @@ const HackerNewsSearch = () => {
 		// use custom hook to send search query
 		searchQuery.current = query;
 		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
+		setSearchParam(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`)
 	}
 
 	const renderSearchResults = hits => {
@@ -41,6 +46,7 @@ const HackerNewsSearch = () => {
 						pathname: `/articles/${article.objectID}`,
 						state: {
 							article,
+							searchParam
 						},
 					}} className="btn btn-sm btn-primary">Read more</Link>
 				</p>

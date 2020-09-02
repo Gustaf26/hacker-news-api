@@ -33,6 +33,7 @@ const HackerNewsArticle = (props) => {
 	}, [articleId, setUrl]);
 
 
+
 	return (
 		<article className="mt-3">
 			{
@@ -79,7 +80,15 @@ const HackerNewsArticle = (props) => {
 									<Link to='/' className="btn btn-primary">&laquo; Back to front page</Link>
 								</div>
 								<div>
-									<button onClick={() => history.goBack()} className="btn btn-warning">&laquo; Go back (and forget this article)</button>
+
+								{lochis.location.state? 
+
+								<Link to={{
+									pathname: `/search`,
+									state: {
+										search:lochis.location.state.searchParam
+									}}} className="btn btn-sm btn-primary">&laquo; Go back (and forget this article)
+									</Link>:null}
 								</div>
 							</>
 						) : ''
