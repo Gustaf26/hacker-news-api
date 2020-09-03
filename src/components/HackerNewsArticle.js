@@ -88,7 +88,10 @@ const HackerNewsArticle = (props) => {
 										<Link to={{
 										pathname: `/search`,
 										state: {
-											search:lochis.location.state.searchParam
+											search:{
+												url: lochis.location.state.searchParam.url,
+												string: lochis.location.state.searchParam.string}
+
 										}}} className="btn btn-sm btn-primary">&laquo; Go back (and forget this article)
 										</Link>: 
 										

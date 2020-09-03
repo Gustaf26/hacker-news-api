@@ -8,13 +8,13 @@ const HackerNewsSearch = () => {
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 	const location = useLocation();
-	const [searchParam, setSearchParam] = useState('')
+	const [searchParam, setSearchParam] = useState({url:'', string:''})
 	console.log('location:', location);
 
 	useEffect(() => {
 		queryRef.current.focus();
 
-		if (location.state) {setUrl(location.state.search);}
+		if (location.state) {setUrl(location.state.search.url);}
 		
 	}, []);
 
@@ -28,8 +28,12 @@ const HackerNewsSearch = () => {
 
 		// use custom hook to send search query
 		searchQuery.current = query;
+
 		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
-		setSearchParam(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`)
+
+		setSearchParam(
+			{url: `https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`, 
+			string: query})
 	}
 
 	const renderSearchResults = hits => {
@@ -69,7 +73,7 @@ const HackerNewsSearch = () => {
 							value={query}
 							type="text"
 							className="form-control"
-							placeholder="Type to search for Hacker News articles"
+							placeholder={location.state? `${location.state.search.string}` : "Type to search for Hacker News articles"}
 						/>
 
 						<div className="input-group-append">
