@@ -2,17 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
-import useHook from '../hooks/useHook'
+// import useHook from '../hooks/useHook'
 
 const HackerNewsArticle = (props) => {
 
-	const [{ data, isLoading, error }, setUrl] = useFetch('');
+	const [{ data, isLoading, error }, setUrl, setData] = useFetch('');
 	const { articleId } = useParams();
-	 const location = useLocation();
+	 const {state} = useLocation();
+	 
 	 const history = useHistory();
 
-	const [lochis, setLochis] = useHook({location:location, history: history})
-	console.log(lochis)
+	// const [lochis, setLochis] = useHook({location:location, history: history})
+	// console.log(lochis)
 
 	useEffect(() => {
 		// fetch article from Hacker News API
@@ -20,13 +21,22 @@ const HackerNewsArticle = (props) => {
 			return;
 		}
 
-		setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
+		if (state && state.article) {
 
-		setLochis({location:lochis.location, history: lochis.history.push(`${lochis.location.pathname}`)})
+            // fetch article from location.state
+            console.log("Article exists in location.state, using that to avoid an extra fetch");
+			setData(state.article);
+			
+        } else if (articleId) {
+
+            // fetch article from Hacker News API
+            console.log("No article in location.state, fetching from HN API");
+            setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);}
 
 		return () =>{
 
-			setLochis({location: lochis.location, history:''})
+			// history.push(location.pathname)
+			// setLochis({location: lochis.location, history:''})
 
 		}
 
@@ -63,41 +73,16 @@ const HackerNewsArticle = (props) => {
 
 										<dt className="col-sm-3">Points</dt>
 										<dd className="col-sm-9">{data.points}</dd>
-						
-										{lochis.location.state? 
-								
-								/* <div className="content" dangerouslySetInnerHTML={{ __html: data.text }}> */
-										<dl>
-											<dt className="col-sm-3"> Available at</dt>
-											<dd className="col-sm-9"><a href={`${lochis.location.state.article.url}`}>{lochis.location.state.article.url}</a></dd> 
-										</dl>
-								
-										:null}
 									</dl>
 								</div>
-
 								<div>
 									<Link to='/' className="btn btn-primary">&laquo; Back to front page</Link>
 								</div>
 								<div>
 
-								{lochis.location.state? 
-
-									<div> {lochis.location.state.searchParam?
-									
-										<Link to={{
-										pathname: `/search`,
-										state: {
-											search:{
-												url: lochis.location.state.searchParam.url,
-												string: lochis.location.state.searchParam.string}
-
-										}}} className="btn btn-sm btn-primary">&laquo; Go back (and forget this article)
-										</Link>: 
-										
-										<button className="btn btn-sm btn-primary" onClick={()=>history.goBack()}>Go back (and forget this article)</button>}
-
-									</div>:null}
+									{state? 
+											
+										<button className="btn btn-sm btn-primary" onClick={()=>history.goBack()}>Go back (and forget this article)</button>:null}
 
 								</div>
 							</>

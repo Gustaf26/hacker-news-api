@@ -39,7 +39,8 @@ const useFetch = (initialUrl) => {
 
 	return [
 		{ data, isLoading, error },
-		setUrl
+		setUrl,
+		setData
 	];
 }
 

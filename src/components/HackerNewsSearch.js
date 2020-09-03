@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import { useUrlSearchParams } from "use-url-search-params";
 
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
@@ -8,13 +9,18 @@ const HackerNewsSearch = () => {
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 	const location = useLocation();
-	const [searchParam, setSearchParam] = useState({url:'', string:''})
-	console.log('location:', location);
+	const [searchParams, setSearchParams] = useUrlSearchParams();
+		console.log('location:', location);
 
 	useEffect(() => {
-		queryRef.current.focus();
 
-		if (location.state) {setUrl(location.state.search.url);}
+		if (searchParams.q) {
+
+			setQuery(searchParams.q);
+			
+			setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${searchParams.q}&tags=story`);}
+			
+		else {queryRef.current.focus();}
 		
 	}, []);
 
@@ -31,9 +37,8 @@ const HackerNewsSearch = () => {
 
 		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
 
-		setSearchParam(
-			{url: `https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`, 
-			string: query})
+		// set query in UrlSearchParams
+        setSearchParams({ q: query });
 	}
 
 	const renderSearchResults = hits => {
@@ -49,8 +54,7 @@ const HackerNewsSearch = () => {
 					<Link to={{
 						pathname: `/articles/${article.objectID}`,
 						state: {
-							article,
-							searchParam
+							article
 						},
 					}} className="btn btn-sm btn-primary">Read more</Link>
 				</p>
