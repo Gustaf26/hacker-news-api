@@ -43,49 +43,48 @@ const HackerNewsLatest = () => {
 
 
 	return (
-		<>
-			<h2>This would show the latest articles</h2>
-
-			<p>Can't find something interesting? Try <Link to='/search'>searching</Link>!</p>
-
-			{login===false? 
+		<> {login===false? 			
 			
 			<div className="px-2">
-				Please log in  
-				<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-primary mx-2 my-3">
+				Please log in to see latest news
+				<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-warning mx-2 my-3">
 					Log in
 				</button>
 			</div>:
-			
-			<div className="px-2">
-				Click to log out
-				<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-primary mx-2 my-3">
-					Log out
-				</button>
+			<div>
+				<h2>This would show the latest articles</h2>
+
+				<p>Can't find something interesting? Try <Link to='/search'>searching</Link>!</p>
+				<div className="px-2">
+					Click here to log out
+					<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-danger mx-2 my-3">
+						Log out
+					</button>
+				</div>
+
+				<ul className="list-group">
+					<li id="newsContainer" className="list-group-item">
+
+						<div id="add" className="col-3">
+							<h3>Some Advertisment</h3>
+
+							<p className="text-muted small">
+								Sponsored by someone
+							</p>
+
+							<p>
+								<button className="btn btn-sm btn-primary">Go to advertisment</button>
+							</p>
+						</div>
+						<div className="col-8">
+							{data.hits?
+							<ul className="search-results list-group">
+								{renderNews(data.hits)}
+							</ul>:null}
+						</div>
+					</li>
+				</ul>
 			</div>}
-
-			<ul className="list-group">
-				<li id="newsContainer" className="list-group-item">
-
-					<div id="add" className="col-3">
-						<h3>Some Advertisment</h3>
-
-						<p className="text-muted small">
-							Sponsored by someone
-						</p>
-
-						<p>
-							<button className="btn btn-sm btn-primary">Go to advertisment</button>
-						</p>
-					</div>
-					<div className="col-8">
-						{data.hits?
-						<ul className="search-results list-group">
-							{renderNews(data.hits)}
-						</ul>:null}
-					</div>
-				</li>
-			</ul>
 		</>
 	);
 }

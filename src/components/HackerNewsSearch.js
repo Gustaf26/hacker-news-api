@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import { useUrlSearchParams } from "use-url-search-params";
+import { AuthContext } from '../context/authContext';
 
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
@@ -11,6 +12,7 @@ const HackerNewsSearch = () => {
 	const location = useLocation();
 	const [searchParams, setSearchParams] = useUrlSearchParams();
 		console.log('location:', location);
+	const {login, toggleLogin} = useContext(AuthContext)
 
 	useEffect(() => {
 
@@ -86,6 +88,12 @@ const HackerNewsSearch = () => {
 						</div>
 					</div>
 				</form>
+				<div className="px-2">
+					Click here to log out
+					<Link to={'/'} onClick={()=>toggleLogin(login)} className="btn btn-m btn-danger mx-2 my-3">
+						Log out
+					</Link>
+				</div>
 			</div>
 
 			<div className="mt-3">

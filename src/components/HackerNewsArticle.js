@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
+import { AuthContext } from '../context/authContext';
 // import useHook from '../hooks/useHook'
 
 const HackerNewsArticle = (props) => {
 
 	const [{ data, isLoading, error }, setUrl, setData] = useFetch('');
 	const { articleId } = useParams();
-	 const {state} = useLocation();
+	const {state} = useLocation();
 	 
-	 const history = useHistory();
+	const history = useHistory();
+	const {login, toggleLogin} = useContext(AuthContext)
 
 	// const [lochis, setLochis] = useHook({location:location, history: history})
 	// console.log(lochis)
@@ -84,6 +86,12 @@ const HackerNewsArticle = (props) => {
 											
 										<button className="btn btn-sm btn-primary" onClick={()=>history.goBack()}>Go back (and forget this article)</button>:null}
 
+										<div className="px-2">
+											Click here to log out
+											<Link to={'/'} onClick={()=>toggleLogin(login)} className="btn btn-m btn-danger mx-2 my-3">
+												Log out
+											</Link>
+										</div>
 								</div>
 							</>
 						) : ''
