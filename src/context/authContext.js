@@ -6,9 +6,16 @@ const AuthContextProvider = (props) => {
 
     const [login, setLogin] = useState(false)
 
+    const toggleLogin = (login) =>{
+
+         setLogin(!login)
+
+         return login
+    }
+
     return (
 
-        <AuthContext.Provider value={{login}}>
+        <AuthContext.Provider value={{login, toggleLogin}}>
 
             {props.children}
 

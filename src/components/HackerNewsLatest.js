@@ -8,7 +8,7 @@ const HackerNewsLatest = () => {
 	const [query, setQuery] = useState('http://hn.algolia.com/api/v1/search?tags=front_page');
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
 
-	const {login} = useContext(AuthContext)
+	const {login, toggleLogin} = useContext(AuthContext)
 
 	useEffect(()=>{
 
@@ -52,14 +52,14 @@ const HackerNewsLatest = () => {
 			
 			<div className="px-2">
 				Please log in  
-				<button className="btn btn-m btn-primary mx-2 my-3">
+				<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-primary mx-2 my-3">
 					Log in
 				</button>
 			</div>:
 			
 			<div className="px-2">
 				Click to log out
-				<button className="btn btn-m btn-primary mx-2 my-3">
+				<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-primary mx-2 my-3">
 					Log out
 				</button>
 			</div>}
