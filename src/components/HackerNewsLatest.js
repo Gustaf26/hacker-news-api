@@ -1,15 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch'
+import { AuthContext } from '../context/authContext';
 
 const HackerNewsLatest = () => {
 
 	const [query, setQuery] = useState('http://hn.algolia.com/api/v1/search?tags=front_page');
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
 
+	const {login} = useContext(AuthContext)
+
 	useEffect(()=>{
 
 		setUrl(query)
+		console.log('user logged in =', login)
 
 	},[])
 
@@ -43,6 +47,22 @@ const HackerNewsLatest = () => {
 			<h2>This would show the latest articles</h2>
 
 			<p>Can't find something interesting? Try <Link to='/search'>searching</Link>!</p>
+
+			{login===false? 
+			
+			<div className="px-2">
+				Please log in  
+				<button className="btn btn-m btn-primary mx-2 my-3">
+					Log in
+				</button>
+			</div>:
+			
+			<div className="px-2">
+				Click to log out
+				<button className="btn btn-m btn-primary mx-2 my-3">
+					Log out
+				</button>
+			</div>}
 
 			<ul className="list-group">
 				<li id="newsContainer" className="list-group-item">

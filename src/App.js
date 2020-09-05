@@ -4,6 +4,7 @@ import './App.scss';
 import HackerNewsArticle from './components/HackerNewsArticle';
 import HackerNewsSearch from './components/HackerNewsSearch';
 import HackerNewsLatest from './components/HackerNewsLatest';
+import AuthContextProvider from './context/authContext';
 
 function App() {
 	const location = useLocation();
@@ -22,17 +23,19 @@ function App() {
 
 			<div className="my-5">
 				<Switch>
-					<Route exact path='/'>
-						<HackerNewsLatest />
-					</Route>
+					<AuthContextProvider>
+						<Route exact path='/'>
+							<HackerNewsLatest />
+						</Route>
 
-					<Route path='/search'>
-						<HackerNewsSearch />
-					</Route>
+						<Route path='/search'>
+							<HackerNewsSearch />
+						</Route>
 
-					<Route path='/articles/:articleId'>
-						<HackerNewsArticle user={user} />
-					</Route>
+						<Route path='/articles/:articleId'>
+							<HackerNewsArticle user={user} />
+						</Route>
+					</AuthContextProvider>
 				</Switch>
 			</div>
 		</div>
