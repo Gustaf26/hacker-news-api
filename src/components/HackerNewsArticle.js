@@ -88,7 +88,7 @@ const HackerNewsArticle = (props) => {
 
 										<div className="px-2">
 											Click here to log out
-											<Link to={'/'} onClick={()=>toggleLogin(login)} className="btn btn-m btn-danger mx-2 my-3">
+											<Link to={'/'} onClick={()=>toggleLogin()} className="btn btn-m btn-danger mx-2 my-3">
 												Log out
 											</Link>
 										</div>

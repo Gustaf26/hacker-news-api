@@ -47,7 +47,7 @@ const HackerNewsLatest = () => {
 			
 			<div className="px-2">
 				Please log in to see latest news
-				<button onClick={()=>toggleLogin(login)} className="btn btn-m btn-warning mx-2 my-3">
+				<button onClick={()=>toggleLogin()} className="btn btn-m btn-warning mx-2 my-3">
 					Log in
 				</button>
 			</div>:
