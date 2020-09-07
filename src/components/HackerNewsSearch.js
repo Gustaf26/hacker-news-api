@@ -4,6 +4,7 @@ import useFetch from '../hooks/useFetch';
 import { useUrlSearchParams } from "use-url-search-params";
 import { AuthContext } from '../context/authContext';
 
+
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
 	const [{ data, isLoading, error }, setUrl] = useFetch('');

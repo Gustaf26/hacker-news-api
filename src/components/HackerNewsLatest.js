@@ -2,13 +2,20 @@ import React, {useEffect, useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/authContext';
+import {connect, useStore} from 'react-redux'
+import {addToReducer} from '../actions/addToReducer'
 
-const HackerNewsLatest = () => {
+
+const HackerNewsLatest = (props) => {
 
 	const [query, setQuery] = useState('http://hn.algolia.com/api/v1/search?tags=front_page');
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
 
 	const {login, toggleLogin} = useContext(AuthContext)
+
+	const store = useStore()
+
+	// const dispatch = useDispatch()
 
 	useEffect(()=>{
 
@@ -20,27 +27,29 @@ const HackerNewsLatest = () => {
 
 	const renderNews = hits => {
 
-		console.log(hits)
-		 return hits.map((article, index) => (
-		 	<li key={index} className="list-group-item">
-		 		<h3>{article.title}</h3>
+		store.dispatch({type: 'SET_IN_REDUCER', hits})
 
-		 		<p className="text-muted small">
-		 			Posted at {article.created_at} by {article.author}
-		 		</p>
+		let stateHits = store.getState()
 
-		 		<p>
-		 			<Link to={{
-		 				pathname: `/articles/${article.objectID}`,
-		 				state: {
-	 						article
-		 				},
-		 			}} className="btn btn-sm btn-primary">Read more</Link>
-		 		</p>
-		 	</li>
-		 ))
-	}
+		 return stateHits.hits.map((article, index) => (
+		  	<li key={index} className="list-group-item">
+		  		<h3>{article.title}</h3>
 
+		  		<p className="text-muted small">
+		  			Posted at {article.created_at} by {article.author}
+		  		</p>
+
+		  		<p>
+		  			<Link to={{
+		  				pathname: `/articles/${article.objectID}`,
+		  				state: {
+	 	 					article
+		  				},
+		  			}} className="btn btn-sm btn-primary">Read more</Link>
+		  		</p>
+		  	</li>
+		  ))}
+		  
 
 	return (
 		<> {login===false? 			
@@ -89,4 +98,4 @@ const HackerNewsLatest = () => {
 	);
 }
 
-export default HackerNewsLatest;
+export default HackerNewsLatest
