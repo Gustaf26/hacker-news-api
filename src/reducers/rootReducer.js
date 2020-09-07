@@ -14,7 +14,7 @@ const rootReducer = (state=initState, action) => {
 
         let id = action.id
 
-        return {...state, hits: action.hits.filter(hit=>hit.id != id)}
+        return {...state, hits: state.hits.filter(hit=>hit.id != id)}
     }
 }
 

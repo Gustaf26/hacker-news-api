@@ -24,6 +24,14 @@ const HackerNewsLatest = (props) => {
 
 	},[])
 
+	const deleteNews = id => {
+
+		store.dispatch({type: 'DELETE_FROM-REDUCER', id})
+
+		let stateHits = store.getState()
+	
+		return stateHits}
+
 
 	const renderNews = hits => {
 
@@ -46,9 +54,14 @@ const HackerNewsLatest = (props) => {
 	 	 					article
 		  				},
 		  			}} className="btn btn-sm btn-primary">Read more</Link>
+				</p>
+				<p>
+					<Link to={'/'} onClick={()=>deleteNews(article.objectID)} className="btn btn-sm btn-danger">Read more</Link>
 		  		</p>
 		  	</li>
 		  ))}
+
+	
 		  
 
 	return (
