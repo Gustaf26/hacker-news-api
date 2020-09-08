@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
 import { AuthContext } from '../context/authContext';
-// import useHook from '../hooks/useHook'
+
 
 const HackerNewsArticle = (props) => {
 
@@ -12,12 +12,10 @@ const HackerNewsArticle = (props) => {
 	const {state} = useLocation();
 	 
 	const history = useHistory();
-	const {login, toggleLogin} = useContext(AuthContext)
-
-	// const [lochis, setLochis] = useHook({location:location, history: history})
-	// console.log(lochis)
+	const {toggleLogin} = useContext(AuthContext)
 
 	useEffect(() => {
+
 		// fetch article from Hacker News API
 		if (!articleId) {
 			return;
@@ -34,13 +32,6 @@ const HackerNewsArticle = (props) => {
             // fetch article from Hacker News API
             console.log("No article in location.state, fetching from HN API");
             setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);}
-
-		return () =>{
-
-			// history.push(location.pathname)
-			// setLochis({location: lochis.location, history:''})
-
-		}
 
 	}, [articleId, setUrl]);
 
