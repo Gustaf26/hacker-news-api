@@ -22,7 +22,14 @@ const HackerNewsLatest = (props) => {
 
 	useEffect(()=>{
 
-		renderNews(data)
+		let storeData = store.getState()
+
+		if (storeData) {
+
+			renderNews(storeData)
+		}
+
+		else {renderNews(data)}
 
 	},[data])
 
