@@ -2,9 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/authContext';
-import {connect, useStore} from 'react-redux'
-import {addToReducer} from '../actions/addToReducer'
-
+import { useStore } from 'react-redux'
 
 const HackerNewsLatest = (props) => {
 
@@ -14,8 +12,6 @@ const HackerNewsLatest = (props) => {
 	const {login, toggleLogin} = useContext(AuthContext)
 
 	const store = useStore()
-
-	// const dispatch = useDispatch()
 
 	useEffect(()=>{
 
@@ -28,8 +24,6 @@ const HackerNewsLatest = (props) => {
 
 		renderNews(data)
 
-		console.log(data.hits)
-
 	},[data])
 
 
@@ -40,8 +34,6 @@ const HackerNewsLatest = (props) => {
 			store.dispatch({type: 'SET_IN_REDUCER', hits: data.hits})
 
 			let stateHits = store.getState()
-
-			console.log(stateHits)
 
 			return stateHits? stateHits.hits.map((article, index) => (
 			 	<li key={index} id={article.objectID} className="list-group-item">
