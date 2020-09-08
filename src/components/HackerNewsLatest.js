@@ -24,45 +24,55 @@ const HackerNewsLatest = (props) => {
 
 	},[])
 
+	useEffect(()=>{
+
+		renderNews(data)
+
+		console.log(data.hits)
+
+	},[data])
+
+
+	const renderNews = data => {
+
+		if (data.hits) {
+
+			store.dispatch({type: 'SET_IN_REDUCER', hits: data.hits})
+
+			let stateHits = store.getState()
+
+			console.log(stateHits)
+
+			return stateHits? stateHits.hits.map((article, index) => (
+			 	<li key={index} id={article.objectID} className="list-group-item">
+			 		<h3>{article.title}</h3>
+
+			 		<p className="text-muted small">
+			 			Posted at {article.created_at} by {article.author}
+			 		</p>
+
+			 		<p>
+			 			<Link to={{
+			 				pathname: `/articles/${article.objectID}`,
+			 				state: {
+			 					article
+			 				},
+			 			}} className="btn btn-sm btn-primary">Read more</Link>
+			 		</p>
+			 		<p>
+			 			<Link to={'/'} onClick={()=>deleteNews(article.objectID)} className="btn btn-sm btn-danger">Delete story</Link>
+			 		</p>
+			 	</li>)) : null
+		}}
+
+	
 	const deleteNews = id => {
 
-		store.dispatch({type: 'DELETE_FROM-REDUCER', id})
-
-		let stateHits = store.getState()
+		store.dispatch({type: 'DELETE_FROM_REDUCER', id})
 	
-		return stateHits}
-
-
-	const renderNews = hits => {
-
-		store.dispatch({type: 'SET_IN_REDUCER', hits})
-
 		let stateHits = store.getState()
-
-		 return stateHits.hits.map((article, index) => (
-		  	<li key={index} className="list-group-item">
-		  		<h3>{article.title}</h3>
-
-		  		<p className="text-muted small">
-		  			Posted at {article.created_at} by {article.author}
-		  		</p>
-
-		  		<p>
-		  			<Link to={{
-		  				pathname: `/articles/${article.objectID}`,
-		  				state: {
-	 	 					article
-		  				},
-		  			}} className="btn btn-sm btn-primary">Read more</Link>
-				</p>
-				<p>
-					<Link to={'/'} onClick={()=>deleteNews(article.objectID)} className="btn btn-sm btn-danger">Read more</Link>
-		  		</p>
-		  	</li>
-		  ))}
-
-	
-		  
+					
+		renderNews(stateHits)}
 
 	return (
 		<> {login===false? 			
@@ -101,7 +111,7 @@ const HackerNewsLatest = (props) => {
 						<div className="col-8">
 							{data.hits?
 							<ul className="search-results list-group">
-								{renderNews(data.hits)}
+								{renderNews(store.getState())}
 							</ul>:null}
 						</div>
 					</li>

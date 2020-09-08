@@ -10,11 +10,13 @@ const rootReducer = (state=initState, action) => {
 
         return {...state, hits: action.hits}}
 
-    if (action.type=='DELETE_FROM-REDUCER') {
+    if (action.type=='DELETE_FROM_REDUCER') {
 
         let id = action.id
 
-        return {...state, hits: state.hits.filter(hit=>hit.id != id)}
+        let newHits = state.hits.filter(hit=>id != hit.objectID)
+
+        return {...state, hits: newHits}
     }
 }
 
